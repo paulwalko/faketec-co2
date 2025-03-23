@@ -14,12 +14,24 @@ usr.direction = digitalio.Direction.OUTPUT
 scd4x = adafruit_scd4x.SCD4X(i2c)
 scd4x.start_periodic_measurement()
 
-# make sure mesh is ready
+
+# press for 1 second to wake up mesh and let mesh startup
 usr.value = False
 time.sleep(1)
 usr.value = True
 time.sleep(30)
 
+# double tap to send userinfo
+usr.value = False
+time.sleep(0.5)
+usr.value = True
+time.sleep(0.5)
+usr.value = False
+time.sleep(0.5)
+usr.value = True
+time.sleep(30)
+
+# send co2
 while True:
     if scd4x.data_ready:
         s = str('{ "co2_ppm": %d }' % scd4x.CO2)
@@ -27,13 +39,16 @@ while True:
         print()
         uart.write(bytes(s, 'ascii'))
 
-        # shut down mesh
+        # let mesh send data
+        time.sleep(30)
+
+        # hold for 5s to shut down mesh
         usr.value = False
         time.sleep(6)
         usr.value = True
 
-        # deep sleep for 30 minutes
-        time_alarm = alarm.time.TimeAlarm(monotonic_time=time.monotonic() + 1800)
+        # deep sleep for 30 minutes, and account for drift
+        time_alarm = alarm.time.TimeAlarm(monotonic_time=time.monotonic() + 1800 - 100)
         alarm.exit_and_deep_sleep_until_alarms(time_alarm)
     time.sleep(5)
 
