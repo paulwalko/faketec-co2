@@ -23,9 +23,9 @@
 1. Set user pin to 32
 1. Set Device role to `CLIENT_MUTE`. (This doesn't really matter that much since we're controlling power externally).
 1. Configure serial settings:
-  1. Toggle 'Serial enabled' and 'Echo enabled'
-  1. RX: 20, TX: 22.
-  1. Serial mode: `TEXTMSG`
+    1. Toggle 'Serial enabled' and 'Echo enabled'
+    1. RX: 20, TX: 22.
+    1. Serial mode: `TEXTMSG`
 1. Set the primary channel to something other than the default, and the above serial settings will spam it quite a bit.
 
 ## Post-Assembly (circuitpython board)
@@ -37,8 +37,8 @@
 1. Unplug cables, then plug in usb to meshtastic board and monitor the serial output
 1. After 30s, it should send out a userinfo message
 1. After 30 more seconds, it should send out a co2 reading then shutdown.
-  1. For full verification, you need a second node to receive the message that shares the channel with this node.
+    1. For full verification, you need a second node to receive the message that shares the channel with this node.
 
 ## Links
-* main faketec project: https://github.com/gargomoma/fakeTec_pcb/tree/main
+* faketec project: https://github.com/gargomoma/fakeTec_pcb/tree/main
 * scd41 board: https://www.aliexpress.us/item/3256807392920746.html
