@@ -1,9 +1,16 @@
-# fatetec-co2
-* This is heavily based on gargomoma's faketec v2 board, plus an additional board to gather data (or do anything else) and send it over the mesh via serial. In the photo below, the bottom board is running meshtastic while the top board is running circuit python.
+# faketec-co2
+* This is heavily based on gargomoma's faketec v2 board, plus an additional board to gather data (or do anything else) and send it over the mesh via serial.
+* In the photo below, the bottom board is running meshtastic while the top board is running circuit python.
 * Every 30 minutes, the circuitpython board wakes up the mesh board, triggers userinfo, sends sensor readings, then shuts down the mesh board and deep sleeps for 30 more minutes.
 * With a 2500 mah battery, this can go 4-5 days.
 
+## Top
 ![image](https://github.com/user-attachments/assets/278707ab-374d-4448-8f25-4301c8a08ccd)
+
+## Bottom
+scd41 sensor is mounted to the bottom
+![image](https://github.com/user-attachments/assets/bc1b4a3d-d980-4b34-a6e6-49b1c0d003be)
+
 
 
 ## BOM
