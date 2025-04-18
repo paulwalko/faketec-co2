@@ -47,8 +47,8 @@ while True:
         time.sleep(6)
         usr.value = True
 
-        # deep sleep for 30 minutes, and account for drift
-        time_alarm = alarm.time.TimeAlarm(monotonic_time=time.monotonic() + 1800 - 100)
+        # deep sleep for 5 minutes, and account for drift
+        time_alarm = alarm.time.TimeAlarm(monotonic_time=time.monotonic() + 60 * 5 - 100)
         alarm.exit_and_deep_sleep_until_alarms(time_alarm)
     time.sleep(5)
 
