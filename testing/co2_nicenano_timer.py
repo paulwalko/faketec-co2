@@ -1,5 +1,4 @@
 import adafruit_scd4x
-import alarm
 import board
 import busio
 import digitalio
@@ -8,24 +7,25 @@ import time
 i2c = busio.I2C(board.P0_11, board.P1_04)
 uart = busio.UART(board.P0_20, board.P0_22, baudrate=38400, timeout=0)
 
+timer = digitalio.DigitalInOut(board.P1_06)
+timer.direction = digitalio.Direction.OUTPUT
+
 usr = digitalio.DigitalInOut(board.P1_00)
 usr.direction = digitalio.Direction.OUTPUT
 
 scd4x = adafruit_scd4x.SCD4X(i2c)
 scd4x.start_periodic_measurement()
 
-# detect button
-always_on = digitalio.DigitalInOut(board.P1_06)
-always_on.direction = digitalio.Direction.INPUT
-always_on = not always_on.value
 
 # press for 1 second to wake up mesh and let mesh startup
+print('starting up mesh')
 usr.value = False
 time.sleep(1)
 usr.value = True
 time.sleep(30)
 
 # double tap to send userinfo
+print('userinfo')
 usr.value = False
 time.sleep(0.5)
 usr.value = True
@@ -46,14 +46,9 @@ while True:
         # let mesh send data
         time.sleep(30)
 
-        if not always_on:
-          # hold for 5s to shut down mesh, unless always on mode switch
-          usr.value = False
-          time.sleep(6)
-          usr.value = True
-
-        # deep sleep for 5 minutes, and account for drift
-        time_alarm = alarm.time.TimeAlarm(monotonic_time=time.monotonic() + 60 * 5 - 100)
-        alarm.exit_and_deep_sleep_until_alarms(time_alarm)
+        # tell timer we're done
+        print('bye!')
+        timer.value = False
+        time.sleep(1)
+        timer.value = True
     time.sleep(5)
-
